@@ -40,15 +40,21 @@ class QuotesPipline:
                 "author": adapter["author"],
                 "quote": adapter["quote"],
             })
+        # print(self.quotes)
+        # print(self.authors)
         return
 
-    def close_spider(self, spider):
+    def dump_authors(self):
+        with open('authors.json', 'w', encoding='utf-8') as f:
+            json.dump(self.authors, f, ensure_ascii=False, indent=4)
+
+    def dump_quotes(self):
         with open('quotes.json', 'w', encoding='utf-8') as fd:
             json.dump(self.quotes, fd, ensure_ascii=False, indent=4)
-            load_quotes('quotes.json')
-        with open('authors.json', 'w', encoding='utf-8') as fd:
-            json.dump(self.authors, fd, ensure_ascii=False, indent=4)
-            load_authors('authors.json')
+
+    def close_spider(self, spider):
+        self.dump_authors(), self.dump_quotes(), load_quotes('quotes.json'), load_authors('authors.json')
+
 
 
 class QuotesSpider(scrapy.Spider):

@@ -13,8 +13,8 @@ def load_authors(filename):
     with open(filename, "r") as f:
         unpacked = load(f)
         for author in unpacked:
-            result = Author(fullname=author['fullname'], born_date=author['born_date'],
-                            born_location=author['born_location'], description=author['description'])
+            result = Author(fullname=author['fullname'], born_date=author['date_born'],
+                            born_location=author['location_born'], description=author['bio'])
             result.save()
             print(result)
 
@@ -26,7 +26,7 @@ def load_quotes(filename):
             author = Author.objects(fullname=author_name).first()
             quote['author'] = author
             result = Quote(
-                tags=quote['tags'], quote=quote['quote'], author=quote['author'])
+                tags=quote['keywords'], quote=quote['quote'], author=quote['author'])
             result.save()
             print(result)
 
